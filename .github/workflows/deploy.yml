@@ -24,18 +24,18 @@ jobs:
       - name: copy jar to EC2
         uses: appleboy/scp-actions@v0.1.4
         with:
-          host: ${{EC2_HOST}}
-          username: ${{EC2_USER}}
-          key: ${{EC2_SSH_KEY}}
+          host: ${{secrets.EC2_HOST}}
+          username: ${{secrets.EC2_USER}}
+          key: ${{secrets.EC2_SSH_KEY}}
           source: "target/*.jar"
           target: "~/springapp"
 
       - name: Run app on EC2
         uses: appleboy/ssh-actions@v1.0.0
         with:
-          host: ${{EC2_HOST}}
-          username: ${{EC2_USER}}
-          key: ${{EC2_SSH_KEY}}
+          host: ${{secrets.EC2_HOST}}
+          username: ${{secrets.EC2_USER}}
+          key: ${{secrets.EC2_SSH_KEY}}
           script: |
             pkill -f 'java -jar' || true
             nohup java -jar ~/springapp/*.jar > output.log 2>&1 &
