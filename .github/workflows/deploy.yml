@@ -18,10 +18,12 @@ jobs:
                  key: ${{secrets.EC2_SSH_KEY}}
                  script: |
                    if [ ! -d "JavaSpringBoot" ]; then
-                      git clone https://github.com/Ramakrishna199828/JavaSpringBoot.git
+                      git clone https://github.com/${{secrets.GIT_USERNAME}}/JavaSpringBoot.git
                    fi
                    cd JavaSpringBoot
+                   git remote set-url origin https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PAT }}@github.com/${{ secrets.GIT_USERNAME }}/JavaSpringBoot.git
                    git pull origin master
+                   chmod +x mvnw
                    ./mvnw clean package
                    pkill -f "java -jar" || true
                    nohup java -jar target/*.jar > output.log 2>&1 &
