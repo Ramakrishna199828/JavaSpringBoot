@@ -1,3 +1,4 @@
+
 name: "deploying spring application on EC2"
 
 on:
@@ -40,3 +41,4 @@ jobs:
             pkill -f 'java -jar' || true
             nohup java -jar ~/springapp/*.jar > output.log 2>&1 &
         
+
