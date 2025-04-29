@@ -33,7 +33,7 @@ jobs:
           username: ${{secrets.EC2_USER}}
           key: ${{secrets.EC2_SSH_KEY}}
           source: "target/*.jar"
-          target: "~/springapp"
+          target: "~/springapp/"
 
       - name: Run app on EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -42,5 +42,16 @@ jobs:
           username: ${{secrets.EC2_USER}}
           key: ${{secrets.EC2_SSH_KEY}}
           script: |
+            echo "killing existing java process"
             pkill -f 'java -jar' || true
-            nohup java -jar ~/springapp/*.jar > output.log 2>&1 &
+
+            echo "navigating to app directory"
+            cd ~/springapp
+
+            echo "Setting permissions for jar file"
+            chmod +x *.jar
+
+            echo "Starting the spring boot application"
+            nohup java -jar ~/springapp/*.jar > output.log 2>&1 & disown
+
+            echo "App started.you can check logs in output.log"
