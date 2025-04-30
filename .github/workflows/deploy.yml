@@ -27,7 +27,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
 
             echo "Changing the directory where the application is on EC2"
-            cd /home/ec2-user/your-app-name  # Replace with your actual EC2 folder
+            cd /home/ec2-user/JavaSpringBoot  # Replace with your actual EC2 folder
 
             echo "Pulling the latest code from origin master"
             git pull origin master
